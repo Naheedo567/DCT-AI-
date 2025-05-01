@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DCT - AI Resume Builder</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" type="image/png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('9034ea6e-d64d-4f83-b0c0-c97501adce2a.jpg'); /* Replace with your image */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 50px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .skip-button, .send-email-button, .submit-button, .download-button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .cloud-icon {
+      font-size: 40px;
+      text-align: center;
+    }
+
+    .chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .company-card {
+      background: #ffffffee;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .brand-logo {
+      width: 60px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="form-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="DCT Logo" class="brand-logo">
+    <div class="cloud-icon">☁️</div>
+    <h2>DCT - Auto Resume Creator</h2>
+    <input type="text" placeholder="Full Name" id="name">
+    <input type="text" placeholder="Graduation %" id="grad">
+    <input type="text" placeholder="Skills" id="skills">
+    <input type="text" placeholder="Coding Languages" id="code">
+    <textarea placeholder="Projects" id="projects"></textarea>
+    <textarea placeholder="Achievements" id="achievements"></textarea>
+    <textarea placeholder="Experience" id="experience"></textarea>
+    <input type="text" placeholder="Strengths" id="strengths">
+    <input type="text" placeholder="Hobbies" id="hobbies">
+    <button class="submit-button" onclick="generateResume()">Submit</button>
+    <button class="skip-button" onclick="showCompanies()">Skip</button>
+  </div>
+
+  <div class="container" id="companies-container" style="display: none;">
+    <h2>Top Hiring Companies</h2>
+    <div class="company-card">
+      <p><strong>Company:</strong> Alpha Corp</p>
+      <p><strong>Project Manager:</strong> John Doe</p>
+      <p><strong>Email:</strong> hr@alphacorp.com</p>
+      <p><strong>Position Open:</strong> Software Engineer</p>
+      <p><strong>Required Skills:</strong> JavaScript, React, Problem Solving</p>
+      <button class="send-email-button">Send Email</button>
+    </div>
+    <div class="company-card">
+      <p><strong>Company:</strong> Beta Inc</p>
+      <p><strong>Project Manager:</strong> Jane Smith</p>
+      <p><strong>Email:</strong> jane@betainc.com</p>
+      <p><strong>Position Open:</strong> Backend Developer</p>
+      <p><strong>Required Skills:</strong> Python, Django, REST APIs</p>
+      <button class="send-email-button">Send Email</button>
+    </div>
+    <div class="company-card">
+      <p><strong>Company:</strong> Gamma Solutions</p>
+      <p><strong>Project Manager:</strong> Lisa Ray</p>
+      <p><strong>Email:</strong> lisa@gammasol.com</p>
+      <p><strong>Position Open:</strong> Business Analyst</p>
+      <p><strong>Required Skills:</strong> Excel, SQL, Communication</p>
+      <button class="send-email-button">Send Email</button>
+    </div>
+    <div class="company-card">
+      <p><strong>Company:</strong> DeltaTech</p>
+      <p><strong>Project Manager:</strong> Michael Lee</p>
+      <p><strong>Email:</strong> mike@deltatech.com</p>
+      <p><strong>Position Open:</strong> Project Coordinator</p>
+      <p><strong>Required Skills:</strong> Agile, MS Project, Team Management</p>
+      <button class="send-email-button">Send Email</button>
+    </div>
+  </div>
+
+  <div class="container" id="download-container" style="display:none; text-align:center;">
+    <h2>Your Resume is Ready!</h2>
+    <button class="download-button" onclick="downloadPDF()">Download Resume PDF</button>
+  </div>
+
+  <div class="chatbot">
+    <strong>Chat Bot</strong>
+    <p>Hi! Need help creating your resume?</p>
+  </div>
+
+  <script>
+    function showCompanies() {
+      document.getElementById('form-container').style.display = 'none';
+      document.getElementById('companies-container').style.display = 'block';
+    }
+
+    function generateResume() {
+      const name = document.getElementById('name').value;
+      const grad = document.getElementById('grad').value;
+      const skills = document.getElementById('skills').value;
+      const code = document.getElementById('code').value;
+      const projects = document.getElementById('projects').value;
+      const achievements = document.getElementById('achievements').value;
+      const experience = document.getElementById('experience').value;
+      const strengths = document.getElementById('strengths').value;
+      const hobbies = document.getElementById('hobbies').value;
+
+      window.resumeData = {
+        name, grad, skills, code, projects, achievements, experience, strengths, hobbies
+      };
+
+      document.getElementById('form-container').style.display = 'none';
+      document.getElementById('download-container').style.display = 'block';
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const data = window.resumeData;
+
+      doc.text("Resume", 90, 10);
+      doc.text(`Name: ${data.name}`, 10, 20);
+      doc.text(`Graduation %: ${data.grad}`, 10, 30);
+      doc.text(`Skills: ${data.skills}`, 10, 40);
+      doc.text(`Coding Languages: ${data.code}`, 10, 50);
+      doc.text(`Projects: ${data.projects}`, 10, 60);
+      doc.text(`Achievements: ${data.achievements}`, 10, 70);
+      doc.text(`Experience: ${data.experience}`, 10, 80);
+      doc.text(`Strengths: ${data.strengths}`, 10, 90);
+      doc.text(`Hobbies: ${data.hobbies}`, 10, 100);
+
+      doc.save(`${data.name}_Resume.pdf`);
+    }
+  </script>
+</body>
+</html>
